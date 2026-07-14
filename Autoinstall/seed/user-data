@@ -1,0 +1,46 @@
+#cloud-config
+autoinstall:
+  version: 1
+
+  locale: en_US.UTF-8
+
+  keyboard:
+    layout: us
+    variant: ""
+
+  timezone: Europe/Moscow
+
+  identity:
+    hostname: ubuntu24default
+    username: acid
+    password: "$6$kptKzbmGfXTunZdK$sdcLy36BSkbS9QGUFRxWz8v6kl8HxBvjEGomjBM7mT75/Ywlk1mL36BJQjSnLUP0Dwil7KLRrRqCredxMJrwE0"
+
+  ssh:
+    install-server: true
+    allow-pw: false
+    authorized-keys:
+      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBu85y4vXaoP3Czm1Kx5Pg8wJVnHSHPvydziEN20BdZo default"
+
+  network:
+    version: 2
+    ethernets:
+      primary:
+        match:
+          name: "e*"
+        dhcp4: false
+        dhcp6: false
+        addresses:
+          - 11.11.11.111/24
+        routes:
+          - to: default
+            via: 11.11.11.1
+        nameservers:
+          addresses:
+            - 11.11.11.1
+
+  storage:
+    layout:
+      name: lvm
+      sizing-policy: all
+
+  shutdown: poweroff
